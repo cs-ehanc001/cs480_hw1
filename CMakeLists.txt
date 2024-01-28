@@ -29,8 +29,6 @@ option(SANITIZE_RELEASE "Sanitizers should be used in release builds" NO)
 
 option(COMPILE_TESTS "Tests should be compiled" ${MAIN_PROJECT})
 
-option(FULL_TESTS "Test C++20 and 23 as well" NO)
-
 option(OMIT_20 "C++20 tests should be omitted - ignored if FULL_TESTS is false"
        NO)
 
@@ -50,7 +48,7 @@ add_library(common_properties INTERFACE)
 target_include_directories(common_properties
                            INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/cpp/include)
 target_link_libraries(common_properties INTERFACE compiler_flags supple::core)
-target_compile_features(common_properties INTERFACE cxx_std_17)
+target_compile_features(common_properties INTERFACE cxx_std_20)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cpp)
 

@@ -39,17 +39,6 @@ function(test_handling)
   # make ctest give useful output to console on test failure
   list(APPEND CMAKE_CTEST_ARGUMENTS "--output-on-failure" "--progress")
 
-  message(STATUS "Testing C++17")
-  list(APPEND TEST_STANDARDS "17")
-  if(FULL_TESTS)
-    if(NOT OMIT_20)
-      message(STATUS "Testing C++20")
-      list(APPEND TEST_STANDARDS "20")
-    endif()
-    if(NOT OMIT_23)
-      message(STATUS "Testing C++23")
-      list(APPEND TEST_STANDARDS "23")
-    endif()
-  endif()
+  list(APPEND TEST_STANDARDS "20")
 
 endfunction()
