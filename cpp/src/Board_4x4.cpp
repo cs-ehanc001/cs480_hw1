@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <array>
+#include <ranges>
 #include <stdexcept>
 
 #include "Board_4x4.hpp"
