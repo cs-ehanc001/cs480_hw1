@@ -29,12 +29,6 @@ option(SANITIZE_RELEASE "Sanitizers should be used in release builds" NO)
 
 option(COMPILE_TESTS "Tests should be compiled" ${MAIN_PROJECT})
 
-option(OMIT_20 "C++20 tests should be omitted - ignored if FULL_TESTS is false"
-       NO)
-
-option(OMIT_23 "C++23 tests should be omitted - ignored if FULL_TESTS is false"
-       NO)
-
 # Options specific to compiling with clang
 option(DO_CLANG_TIDY "Run clang-tidy during build" NO)
 option(DO_TIME_TRACE "Run time trace during build" NO)
@@ -50,12 +44,13 @@ target_include_directories(common_properties
 target_link_libraries(common_properties INTERFACE compiler_flags supple::core)
 target_compile_features(common_properties INTERFACE cxx_std_20)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cpp)
-
 if(COMPILE_TESTS)
-  include(testing)
   include(CTest)
+  include(testing)
   enable_testing()
 
   test_handling()
 endif()
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cpp)
+
