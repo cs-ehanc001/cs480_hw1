@@ -28,15 +28,9 @@ is_legal_board(const std::array<char, 16>& board_state) noexcept -> bool
   // each legal_char must appear in board_state
   // consequently, if all appear, then each appears exactly once
   return std::ranges::all_of(legal_chars, [&](const char elem) {
-    return std::ranges::find(board_state, elem) == board_state.end();
+    // True if char is found
+    return std::ranges::find(board_state, elem) != board_state.end();
   });
-
-  /* for ( const char elem : legal_chars ) { */
-  /*   if ( std::ranges::find(board_state, elem) == board_state.end() ) { */
-  /*     return false; */
-  /*   } */
-  /* } */
-  /* return true; */
 }
 
 Board_4x4::Board_4x4(const std::array<char, 16>& board_state)

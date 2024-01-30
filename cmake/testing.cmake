@@ -14,7 +14,7 @@ function(register_test input_test_file test_name)
   add_test(
     NAME ${test_name}
     COMMAND ${test_name}
-    WORKING_DIRECTORY ${TEST_BIN_DIR})
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/tests)
 
 endfunction()
 
