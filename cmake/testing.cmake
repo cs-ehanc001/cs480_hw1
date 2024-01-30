@@ -1,35 +1,20 @@
-function(add_test input_test_file)
-  # remove parent directory path and extension
-  get_filename_component(filename ${input_test_file} NAME_WLE)
-  get_filename_component(raw_path ${input_test_file} DIRECTORY)
+function(register_test input_test_file test_name)
 
-  string(REGEX REPLACE ".*/cpp/tests/src/" "" shortened_path ${raw_path})
+  add_executable(${test_name} ${input_test_file})
 
-  string(REPLACE "/" "_" nearly_corrected_path ${shortened_path})
-  string(REGEX REPLACE "^_" "" corrected_path ${nearly_corrected_path})
+  target_link_libraries(${test_name} PRIVATE compiler_flags supple::core supple::testing)
 
-  foreach(numeric_standard ${TEST_STANDARDS})
-    set(test_exe_name ${corrected_path}_${filename}_${numeric_standard})
+  target_include_directories(${test_name} PRIVATE ${TOP_DIR}/cpp/include/)
 
-    add_executable(${test_exe_name} ${input_test_file})
+  set_target_properties(${test_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY
+    ${CMAKE_BINARY_DIR}/tests)
 
-    target_link_libraries(${test_exe_name} PRIVATE compiler_flags)
+  target_compile_features(${test_name} PUBLIC cxx_std_20)
 
-    target_include_directories(${test_exe_name} PRIVATE ${TOP_DIR}/cpp/include/)
-
-    set_target_properties(${test_exe_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY
-                                                      ${TEST_BIN_DIR})
-
-    target_compile_features(${test_exe_name} PUBLIC cxx_std_${numeric_standard})
-
-    # remove test_ prefix for prettier test output
-    string(REPLACE "test_" "" test_name ${test_exe_name})
-
-    add_test(
-      NAME ${test_name}
-      COMMAND ${test_exe_name}
-      WORKING_DIRECTORY ${TEST_BIN_DIR})
-  endforeach()
+  add_test(
+    NAME ${test_name}
+    COMMAND ${test_name}
+    WORKING_DIRECTORY ${TEST_BIN_DIR})
 
 endfunction()
 
