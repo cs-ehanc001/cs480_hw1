@@ -23,4 +23,5 @@ function(test_handling)
   # make ctest give useful output to console on test failure
   list(APPEND CMAKE_CTEST_ARGUMENTS "--output-on-failure" "--progress")
 
+  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cpp)
 endfunction()

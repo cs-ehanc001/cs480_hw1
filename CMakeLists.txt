@@ -52,5 +52,4 @@ if(COMPILE_TESTS)
   test_handling()
 endif()
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cpp)
 
