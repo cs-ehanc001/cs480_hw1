@@ -3,6 +3,13 @@
 
 #include <array>
 
+enum class Direction : char {
+  Up,
+  Down,
+  Left,
+  Right
+};
+
 class Board_4x4
 {
 private:
@@ -16,12 +23,10 @@ private:
       'D', 'E', 'F', '_'
     };
   // clang-format on
-  bool m_can_move_left : 1 {true};
-  bool m_can_move_right : 1 {false};
   bool m_can_move_up : 1 {true};
   bool m_can_move_down : 1 {false};
-
-  [[nodiscard]] auto p_can_move_left() const noexcept -> bool;
+  bool m_can_move_left : 1 {true};
+  bool m_can_move_right : 1 {false};
 
 public:
 
@@ -33,6 +38,22 @@ public:
   ~Board_4x4() = default;
 
   explicit Board_4x4(const std::array<char, 16>& board_state);
+
+  [[nodiscard]] auto can_move(Direction dir) const noexcept -> bool
+  {
+    switch ( dir ) {
+      using enum Direction;
+
+      case Up:
+        return m_can_move_up;
+      case Down:
+        return m_can_move_down;
+      case Left:
+        return m_can_move_left;
+      case Right:
+        return m_can_move_right;
+    }
+  }
 };
 
 #endif
