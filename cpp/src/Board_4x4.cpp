@@ -2,7 +2,7 @@
 #include <array>
 #include <stdexcept>
 
-#include "board.hpp"
+#include "Board_4x4.hpp"
 
 [[nodiscard]] auto
 is_legal_board(const std::array<char, 16>& board_state) noexcept -> bool
