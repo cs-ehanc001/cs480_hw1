@@ -11,7 +11,7 @@ static auto test_valid_moves() -> supl::test_results
 {
   supl::test_results results;
 
-  Board_4x4 pos_0
+  const Board_4x4 pos_0
     // clang-format off
     {
       std::array{
@@ -30,7 +30,7 @@ static auto test_valid_moves() -> supl::test_results
                         supl::ctie(false, true, false, true),
                         "Position 0");
 
-  Board_4x4 pos_1
+  const Board_4x4 pos_1
     // clang-format off
     {
       std::array{
@@ -49,7 +49,7 @@ static auto test_valid_moves() -> supl::test_results
                         supl::ctie(false, true, true, true),
                         "Position 1");
 
-  Board_4x4 pos_2
+  const Board_4x4 pos_2
     // clang-format off
     {
       std::array{
@@ -68,7 +68,7 @@ static auto test_valid_moves() -> supl::test_results
                         supl::ctie(false, true, true, true),
                         "Position 2");
 
-  Board_4x4 pos_3
+  const Board_4x4 pos_3
     // clang-format off
     {
       std::array{
@@ -87,7 +87,7 @@ static auto test_valid_moves() -> supl::test_results
                         supl::ctie(false, true, true, false),
                         "Position 3");
 
-  Board_4x4 pos_4
+  const Board_4x4 pos_4
     // clang-format off
     {
       std::array{
@@ -106,7 +106,7 @@ static auto test_valid_moves() -> supl::test_results
                         supl::ctie(true, true, false, true),
                         "Position 4");
 
-  Board_4x4 pos_5
+  const Board_4x4 pos_5
     // clang-format off
     {
       std::array{
@@ -125,7 +125,7 @@ static auto test_valid_moves() -> supl::test_results
                         supl::ctie(true, true, true, true),
                         "Position 5");
 
-  Board_4x4 pos_6
+  const Board_4x4 pos_6
     // clang-format off
     {
       std::array{
@@ -144,7 +144,7 @@ static auto test_valid_moves() -> supl::test_results
                         supl::ctie(true, true, true, true),
                         "Position 6");
 
-  Board_4x4 pos_7
+  const Board_4x4 pos_7
     // clang-format off
     {
       std::array{
@@ -163,7 +163,7 @@ static auto test_valid_moves() -> supl::test_results
                         supl::ctie(true, true, true, false),
                         "Position 7");
 
-  Board_4x4 pos_8
+  const Board_4x4 pos_8
     // clang-format off
     {
       std::array{
@@ -182,7 +182,7 @@ static auto test_valid_moves() -> supl::test_results
                         supl::ctie(true, true, false, true),
                         "Position 8");
 
-  Board_4x4 pos_9
+  const Board_4x4 pos_9
     // clang-format off
     {
       std::array{
@@ -201,7 +201,7 @@ static auto test_valid_moves() -> supl::test_results
                         supl::ctie(true, true, true, true),
                         "Position 9");
 
-  Board_4x4 pos_10
+  const Board_4x4 pos_10
     // clang-format off
     {
       std::array{
@@ -220,7 +220,7 @@ static auto test_valid_moves() -> supl::test_results
                         supl::ctie(true, true, true, true),
                         "Position 10");
 
-  Board_4x4 pos_11
+  const Board_4x4 pos_11
     // clang-format off
     {
       std::array{
@@ -239,7 +239,7 @@ static auto test_valid_moves() -> supl::test_results
                         supl::ctie(true, true, true, false),
                         "Position 11");
 
-  Board_4x4 pos_12
+  const Board_4x4 pos_12
     // clang-format off
     {
       std::array{
@@ -258,7 +258,7 @@ static auto test_valid_moves() -> supl::test_results
                         supl::ctie(true, false, false, true),
                         "Position 12");
 
-  Board_4x4 pos_13
+  const Board_4x4 pos_13
     // clang-format off
     {
       std::array{
@@ -277,7 +277,7 @@ static auto test_valid_moves() -> supl::test_results
                         supl::ctie(true, false, true, true),
                         "Position 13");
 
-  Board_4x4 pos_14
+  const Board_4x4 pos_14
     // clang-format off
     {
       std::array{
@@ -296,7 +296,7 @@ static auto test_valid_moves() -> supl::test_results
                         supl::ctie(true, false, true, true),
                         "Position 14");
 
-  Board_4x4 pos_15
+  const Board_4x4 pos_15
     // clang-format off
     {
       std::array{
