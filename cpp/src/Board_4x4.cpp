@@ -1,6 +1,8 @@
 #include <algorithm>
 #include <array>
 #include <cassert>
+#include <cstddef>
+#include <iterator>
 #include <stdexcept>
 
 #include "Board_4x4.hpp"
@@ -35,9 +37,9 @@ is_legal_board(const std::array<char, 16>& board_state) noexcept -> bool
 
 Board_4x4::Board_4x4(const std::array<char, 16>& board_state)
     : m_board_state {board_state}
-    , m_can_move_up {true}
+    , m_can_move_up {true}  // NOLINT(*default-member-init*)
     , m_can_move_down {true}
-    , m_can_move_left {true}
+    , m_can_move_left {true}  // NOLINT(*default-member-init*)
     , m_can_move_right {true}
 {
   if ( ! is_legal_board(board_state) ) {
