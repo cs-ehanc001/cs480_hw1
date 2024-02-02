@@ -50,12 +50,18 @@ static auto generate_moves_from_top_left() -> supl::test_results
   // clang-format on
   };
 
-  results.enforce_false(std::ranges::find(possible_moves, move_right)
-                          == possible_moves.end(),
-                        "Incorrect right move");
-  results.enforce_false(std::ranges::find(possible_moves, move_down)
-                          == possible_moves.end(),
-                        "Incorrect down move");
+  results.enforce_equal(possible_moves.front(), move_down);
+  using enum Direction;
+  for ( Direction dir : {Up, Down, Left, Right} ) {
+    results.enforce_equal(possible_moves.front().can_move(dir),
+                          move_down.can_move(dir));
+  }
+
+  results.enforce_equal(possible_moves.back(), move_right);
+  for ( Direction dir : {Up, Down, Left, Right} ) {
+    results.enforce_equal(possible_moves.back().can_move(dir),
+                          move_right.can_move(dir));
+  }
 
   if ( ! results.test_passes() ) {
     std::cout << start << '\n';
@@ -65,11 +71,11 @@ static auto generate_moves_from_top_left() -> supl::test_results
   return results;
 }
 
-auto test_move_validity() -> supl::test_section
+auto test_move_generation() -> supl::test_section
 {
   supl::test_section section;
 
-  section.add_test("Move Validity", &generate_moves_from_top_left);
+  section.add_test("Moves from Top Left", &generate_moves_from_top_left);
 
   return section;
 }
@@ -78,7 +84,7 @@ auto main() -> int
 {
   supl::test_runner runner;
 
-  runner.add_section(test_move_validity());
+  runner.add_section(test_move_generation());
 
   return runner.run();
 }

@@ -87,7 +87,7 @@ auto Board_4x4::p_swap(std::size_t idx1, std::size_t idx2) noexcept
   -> Board_4x4&
 {
   std::swap(m_board_state.at(idx1), m_board_state.at(idx2));
-  p_determine_legal_moves();
+  this->p_determine_legal_moves();
   return *this;
 }
 
