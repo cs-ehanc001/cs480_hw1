@@ -33,7 +33,7 @@ private:
   bool m_can_move_right : 1 {false};
 
   void p_determine_legal_moves() noexcept;
-  void p_swap(std::size_t idx1, std::size_t idx2) noexcept;
+  auto p_swap(std::size_t idx1, std::size_t idx2) noexcept -> Board_4x4&;
 
 public:
 

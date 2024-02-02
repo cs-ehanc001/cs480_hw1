@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <iterator>
 #include <stdexcept>
+#include <supl/utility.hpp>
 
 #include "Board_4x4.hpp"
 
@@ -82,10 +83,12 @@ Board_4x4::Board_4x4(const std::array<char, 16>& board_state)
   p_determine_legal_moves();
 }
 
-void Board_4x4::p_swap(std::size_t idx1, std::size_t idx2) noexcept
+auto Board_4x4::p_swap(std::size_t idx1, std::size_t idx2) noexcept
+  -> Board_4x4&
 {
   std::swap(m_board_state.at(idx1), m_board_state.at(idx2));
   p_determine_legal_moves();
+  return *this;
 }
 
 auto Board_4x4::generate_possible_moves() const noexcept
@@ -97,6 +100,21 @@ auto Board_4x4::generate_possible_moves() const noexcept
   std::vector<Board_4x4> possible_moves {};
 
   if ( m_can_move_up ) {
-    // TODO
+    possible_moves.push_back(
+      supl::explicit_copy(*this).p_swap(space_idx, space_idx - 4));
   }
+  if ( m_can_move_down ) {
+    possible_moves.push_back(
+      supl::explicit_copy(*this).p_swap(space_idx, space_idx + 4));
+  }
+  if ( m_can_move_left ) {
+    possible_moves.push_back(
+      supl::explicit_copy(*this).p_swap(space_idx, space_idx - 1));
+  }
+  if ( m_can_move_right ) {
+    possible_moves.push_back(
+      supl::explicit_copy(*this).p_swap(space_idx, space_idx + 1));
+  }
+
+  return possible_moves;
 }
