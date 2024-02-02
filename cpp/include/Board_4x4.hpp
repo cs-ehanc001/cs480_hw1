@@ -1,9 +1,9 @@
 #ifndef BOARD_HPP
 #define BOARD_HPP
 
+#include <algorithm>
 #include <array>
 #include <iostream>
-#include <map>
 #include <string_view>
 #include <vector>
 
@@ -72,27 +72,27 @@ public:
                                 const Board_4x4& rhs) noexcept
     -> std::ostream&
   {
-    const static std::map<char, std::string_view> print_mapping {
-      {'1', "  1 "},
-      {'2', "  2 "},
-      {'3', "  3 "},
-      {'4', "  4 "},
-      {'5', "  5 "},
-      {'6', "  6 "},
-      {'7', "  7 "},
-      {'8', "  8 "},
-      {'9', "  9 "},
-      {'A', " 10 "},
-      {'B', " 11 "},
-      {'C', " 12 "},
-      {'D', " 13 "},
-      {'E', " 14 "},
-      {'F', " 15 "},
-      {'_', "    "}
-    };
+    const std::array<std::pair<char, std::string_view>, 16> print_mapping {
+      std::make_pair<char, std::string_view>('1', "  1 "),
+      std::make_pair<char, std::string_view>('2', "  2 "),
+      std::make_pair<char, std::string_view>('3', "  3 "),
+      std::make_pair<char, std::string_view>('4', "  4 "),
+      std::make_pair<char, std::string_view>('5', "  5 "),
+      std::make_pair<char, std::string_view>('6', "  6 "),
+      std::make_pair<char, std::string_view>('7', "  7 "),
+      std::make_pair<char, std::string_view>('8', "  8 "),
+      std::make_pair<char, std::string_view>('9', "  9 "),
+      std::make_pair<char, std::string_view>('A', " 10 "),
+      std::make_pair<char, std::string_view>('B', " 11 "),
+      std::make_pair<char, std::string_view>('C', " 12 "),
+      std::make_pair<char, std::string_view>('D', " 13 "),
+      std::make_pair<char, std::string_view>('E', " 14 "),
+      std::make_pair<char, std::string_view>('F', " 15 "),
+      std::make_pair<char, std::string_view>('_', "    ")};
 
     std::string output_buffer {
-      R"(XXXX|XXXX|XXXX|XXXX
+      R"(
+XXXX|XXXX|XXXX|XXXX
 -------------------
 XXXX|XXXX|XXXX|XXXX
 -------------------
@@ -102,8 +102,14 @@ XXXX|XXXX|XXXX|XXXX
 )"};
 
     for ( const char elem : rhs.m_board_state ) {
-      output_buffer.replace(
-        output_buffer.find("XXXX"), 4, print_mapping.at(elem));
+      output_buffer.replace(output_buffer.find("XXXX"),
+                            4,
+                            (*std::ranges::find_if(print_mapping,
+                                                   [&](const auto& kv) {
+                                                     return kv.first
+                                                         == elem;
+                                                   }))
+                              .second);
     }
 
     out << output_buffer;
