@@ -42,6 +42,9 @@ public:
 
   explicit Board_4x4(const std::array<char, 16>& board_state);
 
+  [[nodiscard]] friend auto operator<=>(const Board_4x4&,
+                                        const Board_4x4&) = default;
+
   [[nodiscard]] auto can_move(Direction dir) const noexcept -> bool
   {
     switch ( dir ) {
