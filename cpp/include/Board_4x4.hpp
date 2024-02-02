@@ -85,13 +85,13 @@ public:
     };
 
     std::string output_buffer {
-      R"(XXXX | XXXX | XXXX | XXXX
--------------------------
-XXXX | XXXX | XXXX | XXXX
--------------------------
-XXXX | XXXX | XXXX | XXXX
--------------------------
-XXXX | XXXX | XXXX | XXXX
+      R"(XXXX|XXXX|XXXX|XXXX
+-------------------
+XXXX|XXXX|XXXX|XXXX
+-------------------
+XXXX|XXXX|XXXX|XXXX
+-------------------
+XXXX|XXXX|XXXX|XXXX
 )"};
 
     for ( const char elem : rhs.m_board_state ) {
