@@ -2,6 +2,9 @@
 #define BOARD_HPP
 
 #include <array>
+#include <iostream>
+#include <map>
+#include <string_view>
 
 enum class Direction : char {
   Up,
@@ -53,6 +56,32 @@ public:
       case Right:
         return m_can_move_right;
     }
+  }
+
+  friend inline auto operator<<(std::ostream& out,
+                                const Board_4x4& rhs) noexcept
+    -> std::ostream&
+  {
+    const static std::map<char, std::string_view> print_mapping {
+      {'1', "  1 "},
+      {'2', "  2 "},
+      {'3', "  3 "},
+      {'4', "  4 "},
+      {'5', "  5 "},
+      {'6', "  6 "},
+      {'7', "  7 "},
+      {'8', "  8 "},
+      {'9', "  9 "},
+      {'A', " 10 "},
+      {'B', " 11 "},
+      {'C', " 12 "},
+      {'D', " 13 "},
+      {'E', " 14 "},
+      {'F', " 15 "},
+      {'_', "    "}
+    };
+
+    return out;
   }
 };
 
