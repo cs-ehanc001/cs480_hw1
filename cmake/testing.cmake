@@ -1,5 +1,5 @@
 function(register_test input_test_file test_name)
-  set(TEST_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR}/tests)
+  set(TEST_BIN_DIR ${CMAKE_BINARY_DIR}/tests)
 
   add_executable(${test_name} ${input_test_file})
 

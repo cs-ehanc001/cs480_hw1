@@ -81,6 +81,23 @@ public:
       {'_', "    "}
     };
 
+    std::string output_buffer {
+      R"(XXXX | XXXX | XXXX | XXXX
+-------------------------
+XXXX | XXXX | XXXX | XXXX
+-------------------------
+XXXX | XXXX | XXXX | XXXX
+-------------------------
+XXXX | XXXX | XXXX | XXXX
+)"};
+
+    for ( const char elem : rhs.m_board_state ) {
+      output_buffer.replace(
+        output_buffer.find("XXXX"), 4, print_mapping.at(elem));
+    }
+
+    out << output_buffer;
+
     return out;
   }
 };
