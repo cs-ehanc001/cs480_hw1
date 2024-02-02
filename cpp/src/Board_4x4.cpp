@@ -108,9 +108,5 @@ auto Board_4x4::generate_possible_moves() const noexcept
       supl::explicit_copy(*this).p_swap(space_idx, space_idx + 1));
   }
 
-  for ( Board_4x4& board : possible_moves ) {
-    board.p_determine_legal_moves();
-  }
-
   return possible_moves;
 }
