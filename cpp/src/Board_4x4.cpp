@@ -95,14 +95,17 @@ auto Board_4x4::generate_possible_moves() const noexcept
     possible_moves.push_back(
       supl::explicit_copy(*this).p_swap(space_idx, space_idx - 4));
   }
+
   if ( m_can_move_down ) {
     possible_moves.push_back(
       supl::explicit_copy(*this).p_swap(space_idx, space_idx + 4));
   }
+
   if ( m_can_move_left ) {
     possible_moves.push_back(
       supl::explicit_copy(*this).p_swap(space_idx, space_idx - 1));
   }
+
   if ( m_can_move_right ) {
     possible_moves.push_back(
       supl::explicit_copy(*this).p_swap(space_idx, space_idx + 1));
