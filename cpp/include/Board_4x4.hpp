@@ -5,6 +5,7 @@
 #include <iostream>
 #include <map>
 #include <string_view>
+#include <vector>
 
 enum class Direction : char {
   Up,
@@ -30,6 +31,9 @@ private:
   bool m_can_move_down : 1 {false};
   bool m_can_move_left : 1 {true};
   bool m_can_move_right : 1 {false};
+
+  void p_determine_legal_moves() noexcept;
+  void p_swap(std::size_t idx1, std::size_t idx2) noexcept;
 
 public:
 
@@ -60,6 +64,9 @@ public:
         return m_can_move_right;
     }
   }
+
+  [[nodiscard]] auto generate_possible_moves() const noexcept
+    -> std::vector<Board_4x4>;
 
   friend inline auto operator<<(std::ostream& out,
                                 const Board_4x4& rhs) noexcept

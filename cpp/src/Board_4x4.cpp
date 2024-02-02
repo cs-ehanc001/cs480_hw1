@@ -35,20 +35,17 @@ is_legal_board(const std::array<char, 16>& board_state) noexcept -> bool
   });
 }
 
-Board_4x4::Board_4x4(const std::array<char, 16>& board_state)
-    : m_board_state {board_state}
-    , m_can_move_up {true}  // NOLINT(*default-member-init*)
-    , m_can_move_down {true}
-    , m_can_move_left {true}  // NOLINT(*default-member-init*)
-    , m_can_move_right {true}
+[[nodiscard]] static auto
+space_index(const std::array<char, 16>& board_state) noexcept
+  -> std::size_t
 {
-  if ( ! is_legal_board(board_state) ) {
-    throw std::invalid_argument {"Illegal board state"};
-  }
+  return static_cast<std::size_t>(std::distance(
+    std::begin(board_state), std::ranges::find(board_state, '_')));
+}
 
-  const std::size_t space_idx = static_cast<std::size_t>(std::distance(
-    std::begin(m_board_state), std::ranges::find(m_board_state, '_')));
-
+void Board_4x4::p_determine_legal_moves() noexcept
+{
+  const std::size_t space_idx {space_index(m_board_state)};
   assert(m_board_state.at(space_idx) == '_');
 
   const std::size_t column {space_idx % 4};
@@ -68,5 +65,38 @@ Board_4x4::Board_4x4(const std::array<char, 16>& board_state)
 
   if ( column == 3 ) {
     m_can_move_right = false;
+  }
+}
+
+Board_4x4::Board_4x4(const std::array<char, 16>& board_state)
+    : m_board_state {board_state}
+    , m_can_move_up {true}  // NOLINT(*default-member-init*)
+    , m_can_move_down {true}
+    , m_can_move_left {true}  // NOLINT(*default-member-init*)
+    , m_can_move_right {true}
+{
+  if ( ! is_legal_board(board_state) ) {
+    throw std::invalid_argument {"Illegal board state"};
+  }
+
+  p_determine_legal_moves();
+}
+
+void Board_4x4::p_swap(std::size_t idx1, std::size_t idx2) noexcept
+{
+  std::swap(m_board_state.at(idx1), m_board_state.at(idx2));
+  p_determine_legal_moves();
+}
+
+auto Board_4x4::generate_possible_moves() const noexcept
+  -> std::vector<Board_4x4>
+{
+  const std::size_t space_idx {space_index(m_board_state)};
+  assert(m_board_state.at(space_idx) == '_');
+
+  std::vector<Board_4x4> possible_moves {};
+
+  if ( m_can_move_up ) {
+    // TODO
   }
 }
