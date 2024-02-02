@@ -52,21 +52,13 @@ void Board_4x4::p_determine_legal_moves() noexcept
   const std::size_t column {space_idx % 4};
   const std::size_t row {space_idx / 4};
 
-  if ( row == 0 ) {
-    m_can_move_up = false;
-  }
+  m_can_move_up = row != 0;
 
-  if ( row == 3 ) {
-    m_can_move_down = false;
-  }
+  m_can_move_down = row != 3;
 
-  if ( column == 0 ) {
-    m_can_move_left = false;
-  }
+  m_can_move_left = column != 0;
 
-  if ( column == 3 ) {
-    m_can_move_right = false;
-  }
+  m_can_move_right = column != 3;
 }
 
 Board_4x4::Board_4x4(const std::array<char, 16>& board_state)
@@ -114,6 +106,10 @@ auto Board_4x4::generate_possible_moves() const noexcept
   if ( m_can_move_right ) {
     possible_moves.push_back(
       supl::explicit_copy(*this).p_swap(space_idx, space_idx + 1));
+  }
+
+  for ( Board_4x4& board : possible_moves ) {
+    board.p_determine_legal_moves();
   }
 
   return possible_moves;
