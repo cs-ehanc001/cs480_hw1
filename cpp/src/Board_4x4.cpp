@@ -40,13 +40,18 @@ is_legal_board(const std::array<char, 16>& board_state) noexcept -> bool
 space_index(const std::array<char, 16>& board_state) noexcept
   -> std::size_t
 {
-  return static_cast<std::size_t>(std::distance(
-    std::begin(board_state), std::ranges::find(board_state, '_')));
+  const std::size_t retval {static_cast<std::size_t>(std::distance(
+    std::begin(board_state), std::ranges::find(board_state, '_')))};
+
+  assert(retval < 16);
+
+  return retval;
 }
 
 void Board_4x4::p_determine_legal_moves() noexcept
 {
   const std::size_t space_idx {space_index(m_board_state)};
+  assert(space_idx < 16);
   assert(m_board_state.at(space_idx) == '_');
 
   const std::size_t column {space_idx % 4};
@@ -109,6 +114,15 @@ auto Board_4x4::generate_possible_moves() const noexcept
 
   for ( Board_4x4& board : possible_moves ) {
     board.m_parent = this;
+  }
+
+  if ( m_parent != nullptr ) {
+    // move that would undo (doing could lead to infinite loop)
+    const Board_4x4& undoing_move {*m_parent};
+    const auto undoing_itr {
+      std::ranges::find(possible_moves, undoing_move)};
+    assert(undoing_itr != possible_moves.end());
+    possible_moves.erase(undoing_itr);
   }
 
   return possible_moves;
