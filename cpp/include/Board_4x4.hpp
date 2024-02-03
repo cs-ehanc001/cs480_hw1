@@ -27,6 +27,9 @@ private:
       'D', 'E', 'F', '_'
     };
   // clang-format on
+
+  const Board_4x4* m_parent {nullptr};
+
   bool m_can_move_up : 1 {true};
   bool m_can_move_down : 1 {false};
   bool m_can_move_left : 1 {true};
@@ -67,6 +70,12 @@ public:
 
   [[nodiscard]] auto generate_possible_moves() const noexcept
     -> std::vector<Board_4x4>;
+
+  // may return null
+  [[nodiscard]] auto parent() const -> const Board_4x4*
+  {
+    return m_parent;
+  }
 
   friend inline auto operator<<(std::ostream& out,
                                 const Board_4x4& rhs) noexcept
