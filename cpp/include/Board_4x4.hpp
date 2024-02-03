@@ -94,23 +94,23 @@ public:
                                 const Board_4x4& rhs) noexcept
     -> std::ostream&
   {
-    const std::array<std::pair<char, std::string_view>, 16> print_mapping {
-      std::make_pair<char, std::string_view>('1', "  1 "),
-      std::make_pair<char, std::string_view>('2', "  2 "),
-      std::make_pair<char, std::string_view>('3', "  3 "),
-      std::make_pair<char, std::string_view>('4', "  4 "),
-      std::make_pair<char, std::string_view>('5', "  5 "),
-      std::make_pair<char, std::string_view>('6', "  6 "),
-      std::make_pair<char, std::string_view>('7', "  7 "),
-      std::make_pair<char, std::string_view>('8', "  8 "),
-      std::make_pair<char, std::string_view>('9', "  9 "),
-      std::make_pair<char, std::string_view>('A', " 10 "),
-      std::make_pair<char, std::string_view>('B', " 11 "),
-      std::make_pair<char, std::string_view>('C', " 12 "),
-      std::make_pair<char, std::string_view>('D', " 13 "),
-      std::make_pair<char, std::string_view>('E', " 14 "),
-      std::make_pair<char, std::string_view>('F', " 15 "),
-      std::make_pair<char, std::string_view>('_', "    ")};
+    constexpr static std::array<std::pair<char, std::string_view>, 16>
+      print_mapping {std::make_pair<char, std::string_view>('1', "  1 "),
+                     std::make_pair<char, std::string_view>('2', "  2 "),
+                     std::make_pair<char, std::string_view>('3', "  3 "),
+                     std::make_pair<char, std::string_view>('4', "  4 "),
+                     std::make_pair<char, std::string_view>('5', "  5 "),
+                     std::make_pair<char, std::string_view>('6', "  6 "),
+                     std::make_pair<char, std::string_view>('7', "  7 "),
+                     std::make_pair<char, std::string_view>('8', "  8 "),
+                     std::make_pair<char, std::string_view>('9', "  9 "),
+                     std::make_pair<char, std::string_view>('A', " 10 "),
+                     std::make_pair<char, std::string_view>('B', " 11 "),
+                     std::make_pair<char, std::string_view>('C', " 12 "),
+                     std::make_pair<char, std::string_view>('D', " 13 "),
+                     std::make_pair<char, std::string_view>('E', " 14 "),
+                     std::make_pair<char, std::string_view>('F', " 15 "),
+                     std::make_pair<char, std::string_view>('_', "    ")};
 
     std::string output_buffer {
       R"(
