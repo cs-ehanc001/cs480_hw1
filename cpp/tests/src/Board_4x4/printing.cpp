@@ -1,8 +1,6 @@
 #include <array>
 #include <iostream>
 
-#include <supl/utility.hpp>
-
 #include "Board_4x4.hpp"
 
 auto main() -> int

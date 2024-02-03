@@ -1,3 +1,4 @@
+#include <cassert>
 #include <iterator>
 #include <queue>
 #include <stack>
@@ -34,7 +35,10 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
       frontier.front()->generate_possible_moves()};
 
     // remove previous state to avoid infinite loop
-    new_moves.erase(std::ranges::find(new_moves, *frontier.front()));
+    const auto previous_move {
+      std::ranges::find(new_moves, *frontier.front())};
+    assert(previous_move != new_moves.end());
+    new_moves.erase(previous_move);
 
     // remove expanded node from frontier
     frontier.pop();
