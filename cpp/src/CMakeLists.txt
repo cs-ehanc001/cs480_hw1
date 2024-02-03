@@ -1,4 +1,4 @@
-add_library(Game_and_Logic STATIC Board_4x4.cpp)
+add_library(Game_and_Logic STATIC Board_4x4.cpp search.cpp)
 target_include_directories(Game_and_Logic PUBLIC ${TOP_DIR}/cpp/include)
 target_link_libraries(Game_and_Logic common_properties)
 

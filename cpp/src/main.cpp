@@ -1,14 +1,30 @@
+#include <algorithm>
+#include <array>
 #include <iostream>
+#include <iterator>
+#include <ranges>
 #include <vector>
 
-#include <supl/utility.hpp>
+#include "Board_4x4.hpp"
+#include "search.hpp"
 
 auto main() -> int
 {
-  std::cout << supl::stream_adapter {
-    std::vector {
-                 1, 2,
-                 3, 4,
-                 42}
-  } << '\n';
+  // clang-format off
+  Board_4x4 test {
+    std::array {
+      '2', '5', '3', '1',
+      '4', '6', '8', '7',
+      'A', 'D', '_', 'C',
+      'B', 'E', 'F', '9'
+    }
+  };
+  // clang-format on
+
+  const auto solution {bfs_search(test)};
+
+  for ( const auto reverse_view {std::views::reverse(solution)};
+        const auto& state : reverse_view ) {
+    std::cout << state << '\n';
+  }
 }
