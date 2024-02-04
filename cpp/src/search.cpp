@@ -70,6 +70,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
   assert(false);
 }
 
+// need depth-limiting!!
 /* [[nodiscard]] auto dfs_search(const Board_4x4& start) */
 /*   -> std::vector<Board_4x4> */
 /* { */
