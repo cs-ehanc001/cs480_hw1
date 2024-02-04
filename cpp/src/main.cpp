@@ -40,9 +40,12 @@ auto main(const int argc, const char* const* const argv) -> int
     return 1;
   }
 
+  // clang-format off
   assert((search_function == &bfs_search)
-         || (search_function == &dfs_search)
-         || (search_function == &ucs_search));
+      );
+  /* || (search_function == &dfs_search) */
+  /* || (search_function == &ucs_search)); */
+  // clang-format on
 
   std::ifstream infile(argv[2], std::ios::in);
 
