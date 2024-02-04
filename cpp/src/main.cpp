@@ -10,9 +10,13 @@
 #include "Board_4x4.hpp"
 #include "search.hpp"
 
-void print_help_message()
+void print_help_message(const char* const* const argv)
 {
-  std::cerr << "Placeholder help message\n";
+  std::cerr << "Usage:\n";
+  std::cerr << argv[0] << " [search-type] [input-file]\n\n";
+
+  std::cerr << "[search-type] must be one of: --bfs --dfs --ucs\n";
+  std::cerr << "See README.md for input file specification\n";
 }
 
 auto main(const int argc, const char* const* const argv) -> int
@@ -29,14 +33,15 @@ auto main(const int argc, const char* const* const argv) -> int
   };
 
   if ( argc != 3 ) {
-    print_help_message();
+    print_help_message(argv);
     return 1;
   }
 
   try {
     search_function = search_fn_table.at(argv[1]);
   } catch ( const std::out_of_range& ) {
-    print_help_message();
+    std::cerr << "Invalid search type: " << argv[1] << '\n';
+    print_help_message(argv);
     return 1;
   }
 
@@ -51,7 +56,7 @@ auto main(const int argc, const char* const* const argv) -> int
 
   if ( ! infile.is_open() ) {
     std::cerr << "File " << argv[2] << " could not be opened!" << '\n';
-    print_help_message();
+    print_help_message(argv);
     return 1;
   }
 
