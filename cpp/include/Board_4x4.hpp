@@ -90,6 +90,11 @@ public:
     return m_parent;
   }
 
+  [[nodiscard]] auto data() const -> const auto&
+  {
+    return m_board_state;
+  }
+
   friend inline auto operator<<(std::ostream& out,
                                 const Board_4x4& rhs) noexcept
     -> std::ostream&

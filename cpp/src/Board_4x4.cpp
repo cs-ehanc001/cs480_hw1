@@ -91,10 +91,11 @@ auto Board_4x4::p_swap(std::size_t idx1, std::size_t idx2) noexcept
 auto Board_4x4::generate_possible_moves() const noexcept
   -> std::vector<Board_4x4>
 {
-  assert(is_legal_board(m_board_state));
 
   /* std::cout << "Calling space_index from generate_possible_moves with: " */
   /*           << supl::stream_adapter {m_board_state} << '\n'; */
+
+  assert(is_legal_board(m_board_state));
 
   const std::size_t space_idx {space_index(m_board_state)};
   assert(m_board_state.at(space_idx) == '_');
