@@ -1,4 +1,5 @@
 #include <cassert>
+#include <functional>
 #include <iterator>
 #include <list>
 #include <queue>
@@ -22,32 +23,27 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
 [[nodiscard]] auto bfs_search(const Board_4x4& start)
   -> std::vector<Board_4x4>
 {
-  // all nodes (for backtrace of path)
-  std::list<Board_4x4> history {start};
-
-  std::queue<Board_4x4*> frontier {std::deque {&history.front()}};
-
   // default-constructed Board_4x4 is goal state
   const Board_4x4 goal {};
 
-  // break when goal found
+  // history to preserve lifetimes of all nodes for backtrace
+  std::list<Board_4x4> history {start};
+
+  std::queue<Board_4x4*> frontier {};
+  frontier.push(&history.front());
+
+  // will return out of the loop
   while ( true ) {
-    // expand front of frontier
-    std::vector<Board_4x4> new_moves {
-      frontier.front()->generate_possible_moves()};
+    // generate new moves
+    auto new_moves {frontier.front()->generate_possible_moves()};
 
-    std::cout << "Expanding:" << *frontier.front() << '\n';
-    std::cout << "Resulting moves: " << supl::stream_adapter {new_moves}
-              << "\n\n\n";
-
-    // remove expanded node from frontier
+    // remove expanded node
     frontier.pop();
 
-    // save new nodes for backtrace later
+    // save them to history
     std::ranges::copy(new_moves, std::back_inserter(history));
 
-    // add newly-generated nodes to frontier
-    for ( auto& board : new_moves ) {
+    for ( Board_4x4& board : new_moves ) {
 
       if ( board == goal ) {
         return backtrace(board);

@@ -8,8 +8,8 @@
 
 #include "Board_4x4.hpp"
 
-[[nodiscard]] auto
-is_legal_board(const std::array<char, 16>& board_state) noexcept -> bool
+[[nodiscard]] auto static is_legal_board(
+  const std::array<char, 16>& board_state) noexcept -> bool
 {
   constexpr static std::array<char, 16> legal_chars {'1',
                                                      '2',
@@ -79,6 +79,10 @@ Board_4x4::Board_4x4(const std::array<char, 16>& board_state)
 auto Board_4x4::p_swap(std::size_t idx1, std::size_t idx2) noexcept
   -> Board_4x4&
 {
+  assert(idx1 != idx2);
+  assert(idx1 < 16);
+  assert(idx2 < 16);
+
   std::swap(m_board_state.at(idx1), m_board_state.at(idx2));
   this->p_determine_legal_moves();
   return *this;
@@ -87,6 +91,11 @@ auto Board_4x4::p_swap(std::size_t idx1, std::size_t idx2) noexcept
 auto Board_4x4::generate_possible_moves() const noexcept
   -> std::vector<Board_4x4>
 {
+  assert(is_legal_board(m_board_state));
+
+  /* std::cout << "Calling space_index from generate_possible_moves with: " */
+  /*           << supl::stream_adapter {m_board_state} << '\n'; */
+
   const std::size_t space_idx {space_index(m_board_state)};
   assert(m_board_state.at(space_idx) == '_');
 
@@ -121,7 +130,9 @@ auto Board_4x4::generate_possible_moves() const noexcept
     const Board_4x4& undoing_move {*m_parent};
     const auto undoing_itr {
       std::ranges::find(possible_moves, undoing_move)};
+
     assert(undoing_itr != possible_moves.end());
+
     possible_moves.erase(undoing_itr);
   }
 
