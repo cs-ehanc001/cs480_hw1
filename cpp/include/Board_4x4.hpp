@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <array>
 #include <iostream>
+#include <iterator>
 #include <string_view>
 #include <tuple>
 #include <vector>
@@ -93,6 +94,15 @@ public:
   [[nodiscard]] auto data() const -> const auto&
   {
     return m_board_state;
+  }
+
+  friend inline auto operator>>(std::istream& in, Board_4x4& rhs) noexcept
+    -> std::istream&
+  {
+    std::copy_n(
+      std::istream_iterator<char> {in}, 16, rhs.m_board_state.begin());
+    rhs.p_determine_legal_moves();
+    return in;
   }
 
   friend inline auto operator<<(std::ostream& out,
