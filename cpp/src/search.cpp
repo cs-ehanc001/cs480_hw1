@@ -102,7 +102,7 @@ auto misplaced_squares(const Board_4x4& arg) noexcept -> int
 
   std::priority_queue frontier {
     [](Board_4x4* lhs, Board_4x4* rhs) -> bool {
-      return misplaced_squares(*lhs) < misplaced_squares(*rhs);
+      return misplaced_squares(*lhs) > misplaced_squares(*rhs);
     },
     std::deque<Board_4x4*> {}};
   frontier.push(&history.front());
