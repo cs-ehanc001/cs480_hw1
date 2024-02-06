@@ -41,7 +41,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
     assert(! frontier.empty());
 
     // generate new moves
-    auto new_moves {frontier.front()->generate_possible_moves()};
+    const auto new_moves {frontier.front()->generate_possible_moves()};
 
     // remove expanded node
     frontier.pop();
@@ -49,20 +49,20 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
     // save them to history
     std::ranges::copy(new_moves, std::back_inserter(history));
 
-    // iterator to first new node in history
-    auto first_new {
-      std::prev(history.end(),
-                static_cast<std::iterator_traits<
-                  std::decay_t<decltype(history.end())>>::difference_type>(
-                  new_moves.size()))};
-
-    for ( Board_4x4& board : new_moves ) {
+    for ( const Board_4x4& board : new_moves ) {
 
       // goal check each newly-generated node
       if ( board == goal ) {
         return backtrace(board);
       }
     }
+
+    // iterator to first new node in history
+    const auto first_new {
+      std::prev(history.end(),
+                static_cast<std::iterator_traits<
+                  std::decay_t<decltype(history.end())>>::difference_type>(
+                  new_moves.size()))};
 
     // add new nodes to frontier, aware of object lifetimes
     for ( Board_4x4& board :
@@ -116,7 +116,7 @@ auto misplaced_squares(const Board_4x4& arg) noexcept -> int
     assert(! frontier.empty());
 
     // generate new moves
-    auto new_moves {frontier.top()->generate_possible_moves()};
+    const auto new_moves {frontier.top()->generate_possible_moves()};
 
     // remove expanded node
     frontier.pop();
@@ -124,20 +124,20 @@ auto misplaced_squares(const Board_4x4& arg) noexcept -> int
     // save them to history
     std::ranges::copy(new_moves, std::back_inserter(history));
 
-    // iterator to first new node in history
-    auto first_new {
-      std::prev(history.end(),
-                static_cast<std::iterator_traits<
-                  std::decay_t<decltype(history.end())>>::difference_type>(
-                  new_moves.size()))};
-
-    for ( Board_4x4& board : new_moves ) {
+    for ( const Board_4x4& board : new_moves ) {
 
       // goal check each newly-generated node
       if ( board == goal ) {
         return backtrace(board);
       }
     }
+
+    // iterator to first new node in history
+    const auto first_new {
+      std::prev(history.end(),
+                static_cast<std::iterator_traits<
+                  std::decay_t<decltype(history.end())>>::difference_type>(
+                  new_moves.size()))};
 
     // add new nodes to frontier, aware of object lifetimes
     for ( Board_4x4& board :
