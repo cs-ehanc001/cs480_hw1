@@ -49,6 +49,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
     // save them to history
     std::ranges::copy(new_moves, std::back_inserter(history));
 
+    // iterator to first new node in history
     auto first_new {
       std::prev(history.end(),
                 static_cast<std::iterator_traits<
@@ -57,11 +58,13 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
 
     for ( Board_4x4& board : new_moves ) {
 
+      // goal check each newly-generated node
       if ( board == goal ) {
         return backtrace(board);
       }
     }
 
+    // add new nodes to frontier, aware of object lifetimes
     for ( Board_4x4& board :
           supl::range_wrapper {first_new, history.end()} ) {
       frontier.push(&board);
@@ -77,6 +80,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
 /* { */
 /* } */
 
+// h1 heuristic
 auto misplaced_squares(const Board_4x4& arg) noexcept -> int
 {
   constexpr static Board_4x4 goal {};
@@ -87,7 +91,7 @@ auto misplaced_squares(const Board_4x4& arg) noexcept -> int
                                0,
                                std::plus {},
                                [](char a, char b) -> int {
-                                 return static_cast<int>(! (a == b));
+                                 return static_cast<int>(a != b);
                                });
 }
 
@@ -104,8 +108,7 @@ auto misplaced_squares(const Board_4x4& arg) noexcept -> int
     [](Board_4x4* lhs, Board_4x4* rhs) -> bool {
       return misplaced_squares(*lhs) > misplaced_squares(*rhs);
     },
-    std::deque<Board_4x4*> {}};
-  frontier.push(&history.front());
+    std::deque<Board_4x4*> {&history.front()}};
 
   // will return out of the loop
   while ( history.size() < (history.max_size() / 2) ) {
@@ -121,6 +124,7 @@ auto misplaced_squares(const Board_4x4& arg) noexcept -> int
     // save them to history
     std::ranges::copy(new_moves, std::back_inserter(history));
 
+    // iterator to first new node in history
     auto first_new {
       std::prev(history.end(),
                 static_cast<std::iterator_traits<
@@ -129,11 +133,13 @@ auto misplaced_squares(const Board_4x4& arg) noexcept -> int
 
     for ( Board_4x4& board : new_moves ) {
 
+      // goal check each newly-generated node
       if ( board == goal ) {
         return backtrace(board);
       }
     }
 
+    // add new nodes to frontier, aware of object lifetimes
     for ( Board_4x4& board :
           supl::range_wrapper {first_new, history.end()} ) {
       frontier.push(&board);
