@@ -31,7 +31,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
   // history to preserve lifetimes of all nodes for backtrace
   std::list<Board_4x4> history {start};
 
-  std::queue<Board_4x4*> frontier {};
+  std::queue<const Board_4x4*> frontier {};
   frontier.push(&history.front());
 
   // will return out of the loop
@@ -64,7 +64,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
                   new_moves.size()))};
 
     // add new nodes to frontier, aware of object lifetimes
-    for ( Board_4x4& board :
+    for ( const Board_4x4& board :
           supl::range_wrapper {first_new, history.end()} ) {
       frontier.push(&board);
     }
@@ -82,7 +82,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
   // history to preserve lifetimes of all nodes for backtrace
   std::list<Board_4x4> history {start};
 
-  std::stack<Board_4x4*> frontier {};
+  std::stack<const Board_4x4*> frontier {};
   frontier.push(&history.front());
 
   // will return out of the loop
@@ -98,6 +98,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
 
     // save them to history
     std::ranges::copy(new_moves, std::back_inserter(history));
+    history.sort(std::less {});
 
     for ( const Board_4x4& board : new_moves ) {
 
@@ -115,9 +116,13 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
                   new_moves.size()))};
 
     // add new nodes to frontier, aware of object lifetimes
-    for ( Board_4x4& board :
+    for ( const Board_4x4& board :
           supl::range_wrapper {first_new, history.end()} ) {
-      frontier.push(&board);
+
+      // only push onto frontier if identical board state has not been generated
+      if ( ! std::ranges::binary_search(history, board, std::less {}) ) {
+        frontier.push(&board);
+      }
     }
   }
 
@@ -149,10 +154,10 @@ auto misplaced_squares(const Board_4x4& arg) noexcept -> int
   std::list<Board_4x4> history {start};
 
   std::priority_queue frontier {
-    [](Board_4x4* lhs, Board_4x4* rhs) -> bool {
+    [](const Board_4x4* lhs, const Board_4x4* rhs) -> bool {
       return misplaced_squares(*lhs) > misplaced_squares(*rhs);
     },
-    std::deque<Board_4x4*> {&history.front()}};
+    std::deque<const Board_4x4*> {&history.front()}};
 
   // will return out of the loop
   while ( history.size() < (history.max_size() / 2) ) {
@@ -184,7 +189,7 @@ auto misplaced_squares(const Board_4x4& arg) noexcept -> int
                   new_moves.size()))};
 
     // add new nodes to frontier, aware of object lifetimes
-    for ( Board_4x4& board :
+    for ( const Board_4x4& board :
           supl::range_wrapper {first_new, history.end()} ) {
       frontier.push(&board);
     }

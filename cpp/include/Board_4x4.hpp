@@ -66,6 +66,21 @@ public:
                     rhs.m_can_move_right);
   }
 
+  [[nodiscard]] friend auto operator<(const Board_4x4& lhs,
+                                      const Board_4x4& rhs) -> bool
+  {
+    return std::tie(lhs.m_board_state,
+                    lhs.m_can_move_up,
+                    lhs.m_can_move_down,
+                    lhs.m_can_move_left,
+                    lhs.m_can_move_right)
+         < std::tie(rhs.m_board_state,
+                    rhs.m_can_move_up,
+                    rhs.m_can_move_down,
+                    rhs.m_can_move_left,
+                    rhs.m_can_move_right);
+  }
+
   [[nodiscard]] auto can_move(Direction dir) const noexcept -> bool
   {
     switch ( dir ) {
