@@ -28,7 +28,7 @@ auto main(const int argc, const char* const* const argv) -> int
 
   const std::map<std::string_view, search_fn_t> search_fn_table {
     {"--bfs", &bfs_search},
- /* {"--dfs", &dfs_search}, */
+    {"--dfs", &dfs_search},
     {"--ucs", &ucs_search},
   };
 
@@ -46,10 +46,8 @@ auto main(const int argc, const char* const* const argv) -> int
   }
 
   assert((search_function == &bfs_search)
-         /* || (search_function == &dfs_search) */
-         || (search_function == &ucs_search)
-         /* remove this comment */
-  );
+         || (search_function == &dfs_search)
+         || (search_function == &ucs_search));
 
   std::ifstream infile(argv[2], std::ios::in);
 
