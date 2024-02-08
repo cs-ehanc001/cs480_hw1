@@ -63,6 +63,11 @@ auto main(const int argc, const char* const* const argv) -> int
 
   const auto solution {search_function(start)};
 
+  if ( solution.empty() ) {
+    std::cout << "No solution could be found\n";
+    return 1;
+  }
+
   std::cout << "Solution: " << '\n';
 
   for ( const auto reverse_view {std::views::reverse(solution)};

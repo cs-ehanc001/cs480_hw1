@@ -64,7 +64,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
                   std::decay_t<decltype(history.end())>>::difference_type>(
                   new_moves.size()))};
 
-    // add new nodes to frontier, aware of object lifetimes
+    // add new nodes to frontier, cautious of object lifetimes
     for ( const Board_4x4& board :
           supl::range_wrapper {first_new, history.end()} ) {
       frontier.push(&board);
@@ -90,7 +90,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
   std::list<Board_4x4> history {start};
 
   // LIFO frontier
-  std::stack<Node> frontier {};
+  std::stack<Node> frontier {std::deque {Node {&history.front(), 0}}};
 
   while ( history.size() < (history.max_size() / 2) ) {
 
@@ -115,7 +115,18 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
 
     std::ranges::copy(new_moves, std::back_inserter(history));
 
-    // finish DFS
+    // iterator to first new node in history
+    const auto first_new {
+      std::prev(history.end(),
+                static_cast<std::iterator_traits<
+                  std::decay_t<decltype(history.end())>>::difference_type>(
+                  new_moves.size()))};
+
+    // add new nodes to frontier, cautious of object lifetimes
+    for ( Board_4x4& board :
+          supl::range_wrapper {first_new, history.end()} ) {
+      frontier.emplace(&board, current_depth + 1);
+    }
   }
 
   return {};
@@ -182,7 +193,7 @@ auto misplaced_squares(const Board_4x4& arg) noexcept -> int
                   std::decay_t<decltype(history.end())>>::difference_type>(
                   new_moves.size()))};
 
-    // add new nodes to frontier, aware of object lifetimes
+    // add new nodes to frontier, cautious of object lifetimes
     for ( const Board_4x4& board :
           supl::range_wrapper {first_new, history.end()} ) {
       frontier.push(&board);
