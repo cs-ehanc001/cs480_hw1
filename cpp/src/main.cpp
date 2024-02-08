@@ -69,15 +69,15 @@ auto main(const int argc, const char* const* const argv) -> int
     return 1;
   }
 
-  std::cout << generated_node_count << " nodes generated, using "
-            << (sizeof(Board_4x4) * generated_node_count)
-            << " bytes of memory\n\n";
-  std::cout << "Solution: " << '\n';
-
   for ( const auto reverse_view {std::views::reverse(solution)};
         const auto& state : reverse_view ) {
     std::cout << state << '\n';
   }
 
-  std::cout << "Solution requires " << solution.size() << " steps\n";
+  std::cout << generated_node_count << " nodes generated, using "
+            << (sizeof(Board_4x4) * generated_node_count)
+            << " bytes of memory\n\n";
+  std::cout << "Solution: " << '\n';
+
+  std::cout << "Solution took " << solution.size() << " steps\n";
 }
