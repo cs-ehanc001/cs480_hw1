@@ -65,7 +65,8 @@ auto main(const int argc, const char* const* const argv) -> int
   if ( solution.empty() ) {
     std::cerr << "No solution could be found\n";
     std::cerr << generated_node_count << " nodes generated, using "
-              << (sizeof(Board_4x4)) << " bytes of memory\n";
+              << (sizeof(Board_4x4) * generated_node_count)
+              << " bytes of memory\n";
     return 1;
   }
 

@@ -12,6 +12,8 @@
 #include "Board_4x4.hpp"
 #include "search.hpp"
 
+constexpr static std::size_t node_count_cutoff {1'000'000};
+
 auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
 {
   std::vector<Board_4x4> retval {goal};
@@ -36,7 +38,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
   frontier.push(&history.front());
 
   // will return out of the loop
-  while ( history.size() < (history.max_size() / 2) ) {
+  while ( history.size() < node_count_cutoff ) {
 
     assert(! frontier.empty());
 
@@ -71,7 +73,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
     }
   }
 
-  assert(false);
+  return {{}, history.size()};
 }
 
 [[nodiscard]] auto dfs_search(const Board_4x4& start)
@@ -92,7 +94,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
   // LIFO frontier
   std::stack<Node> frontier {std::deque {Node {&history.front(), 0}}};
 
-  while ( history.size() < (history.max_size() / 2) ) {
+  while ( history.size() < node_count_cutoff ) {
 
     assert(! frontier.empty());
 
@@ -165,7 +167,7 @@ auto misplaced_squares(const Board_4x4& arg) noexcept -> int
     std::deque<const Board_4x4*> {&history.front()}};
 
   // will return out of the loop
-  while ( history.size() < (history.max_size() / 2) ) {
+  while ( history.size() < node_count_cutoff ) {
 
     assert(! frontier.empty());
 
@@ -200,5 +202,5 @@ auto misplaced_squares(const Board_4x4& arg) noexcept -> int
     }
   }
 
-  assert(false);
+  return {{}, history.size()};
 }
