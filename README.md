@@ -2,6 +2,8 @@
 
 ## Build Instructions
 
+This project is tested using GCC-11. Older versions may not be supported.
+
 ```sh
 mkdir build
 cd build
@@ -15,6 +17,8 @@ If desired, unit tests can be run with the command: `cmake --build . --target te
 ## Usage
 
 Search type is specified with the flags "bfs", "dfs", or "ucs".
+Depth-first search is implemented with a maximum search depth of 20 nodes, with the root node considered depth 0.
+Uniform-cost search is implemented using the h1 metric, which is minimizing the number of misplaced tiles.
 Position of arguments does matter. Malformed arguments will be diagnosed, and a help message will be presented.
 
 ```
@@ -32,4 +36,4 @@ The input file must contain an initial board state in the following form:
 - Whitespace is ignored
 - Extension is not enforced
 
-A sample file, located in `./inputs/asst.dat` encodes the initial state provided in the assignment PDF.
+A sample file, `./inputs/asst.dat` encodes the initial state provided in the assignment PDF.
