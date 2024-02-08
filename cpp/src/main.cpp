@@ -21,8 +21,7 @@ void print_help_message(const char* const* const argv)
 
 auto main(const int argc, const char* const* const argv) -> int
 {
-  using search_fn_t =
-    std::add_pointer_t<std::vector<Board_4x4>(const Board_4x4&)>;
+  using search_fn_t = decltype(&bfs_search);
 
   search_fn_t search_function {nullptr};
 
@@ -61,13 +60,18 @@ auto main(const int argc, const char* const* const argv) -> int
 
   infile >> start;
 
-  const auto solution {search_function(start)};
+  const auto [solution, generated_node_count] {search_function(start)};
 
   if ( solution.empty() ) {
-    std::cout << "No solution could be found\n";
+    std::cerr << "No solution could be found\n";
+    std::cerr << generated_node_count << " nodes generated, using "
+              << (sizeof(Board_4x4)) << " bytes of memory\n";
     return 1;
   }
 
+  std::cout << generated_node_count << " nodes generated, using "
+            << (sizeof(Board_4x4) * generated_node_count)
+            << " bytes of memory\n\n";
   std::cout << "Solution: " << '\n';
 
   for ( const auto reverse_view {std::views::reverse(solution)};

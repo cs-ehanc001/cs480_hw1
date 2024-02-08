@@ -23,7 +23,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
 }
 
 [[nodiscard]] auto bfs_search(const Board_4x4& start)
-  -> std::vector<Board_4x4>
+  -> std::pair<std::vector<Board_4x4>, std::size_t>
 {
   // default-constructed Board_4x4 is goal state
   const Board_4x4 goal {};
@@ -53,7 +53,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
 
       // goal check each newly-generated node
       if ( board == goal ) {
-        return backtrace(board);
+        return {backtrace(board), history.size()};
       }
     }
 
@@ -75,7 +75,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
 }
 
 [[nodiscard]] auto dfs_search(const Board_4x4& start)
-  -> std::vector<Board_4x4>
+  -> std::pair<std::vector<Board_4x4>, std::size_t>
 {
   // default-constructed Board_4x4 is goal state
   const Board_4x4 goal {};
@@ -98,7 +98,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
 
     // goal check before expansion
     if ( *frontier.top().board_ptr == goal ) {
-      return backtrace(*frontier.top().board_ptr);
+      return {backtrace(*frontier.top().board_ptr), history.size()};
     }
 
     // get new moves and depth of node currently being expanded
@@ -129,7 +129,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
     }
   }
 
-  return {};
+  return {{}, history.size()};
 }
 
 // h1 heuristic
@@ -148,7 +148,7 @@ auto misplaced_squares(const Board_4x4& arg) noexcept -> int
 }
 
 [[nodiscard]] auto ucs_search(const Board_4x4& start)
-  -> std::vector<Board_4x4>
+  -> std::pair<std::vector<Board_4x4>, std::size_t>
 {
   // default-constructed Board_4x4 is goal state
   const Board_4x4 goal {};
@@ -182,7 +182,7 @@ auto misplaced_squares(const Board_4x4& arg) noexcept -> int
 
       // goal check each newly-generated node
       if ( board == goal ) {
-        return backtrace(board);
+        return {backtrace(board), history.size()};
       }
     }
 
