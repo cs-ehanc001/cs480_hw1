@@ -1,4 +1,4 @@
-# PLACEHOLDER TITLE
+# Square Puzzle Solver
 
 ## Build Instructions
 
@@ -8,17 +8,11 @@ cd build
 cmake ../cpp -DCMAKE_BUILD_TYPE=Release
 cmake --build . --parallel 4
 ```
-The name of the resulting executable is `placeholder_name`.
+The name of the resulting executable is `square_puzzle_solver`.
 
 If desired, unit tests can be run with the command: `cmake --build . --target test`
 
-## Building Doxygen Documentation
+## Usage
 
-Run the following commands:
 
-```
-cd doc
-doxygen
-```
-
-Then open `./doc/html/index.html` in your browser of choice. Internet Explorer may experience issues.
+## Input File Specification

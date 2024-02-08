@@ -79,7 +79,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
 {
   // default-constructed Board_4x4 is goal state
   const Board_4x4 goal {};
-  constexpr std::size_t max_depth {10};
+  constexpr std::size_t max_depth {30};
 
   struct Node {
     Board_4x4* board_ptr;
