@@ -2,7 +2,8 @@
 
 ## Build Instructions
 
-This project is tested using GCC-11. Older versions may not be supported.
+This project is tested using GCC-11, using libstdc++-11.
+Older compilers and standard library versions may not be supported.
 
 ```sh
 mkdir build
