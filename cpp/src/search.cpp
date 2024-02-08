@@ -12,7 +12,7 @@
 #include "Board_4x4.hpp"
 #include "search.hpp"
 
-constexpr static std::size_t node_count_cutoff {1'000'000};
+constexpr static std::size_t node_count_cutoff {3'000'000};
 
 auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
 {
