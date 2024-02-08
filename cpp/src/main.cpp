@@ -78,4 +78,6 @@ auto main(const int argc, const char* const* const argv) -> int
         const auto& state : reverse_view ) {
     std::cout << state << '\n';
   }
+
+  std::cout << "Solution requires " << solution.size() << " steps\n";
 }
