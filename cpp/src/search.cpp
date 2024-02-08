@@ -31,6 +31,7 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
   // history to preserve lifetimes of all nodes for backtrace
   std::list<Board_4x4> history {start};
 
+  // FIFO frontier
   std::queue<const Board_4x4*> frontier {};
   frontier.push(&history.front());
 
@@ -78,55 +79,46 @@ auto backtrace(const Board_4x4& goal) -> std::vector<Board_4x4>
 {
   // default-constructed Board_4x4 is goal state
   const Board_4x4 goal {};
+  constexpr std::size_t max_depth {10};
+
+  struct Node {
+    Board_4x4* board_ptr;
+    std::size_t depth;
+  };
 
   // history to preserve lifetimes of all nodes for backtrace
   std::list<Board_4x4> history {start};
 
-  std::stack<const Board_4x4*> frontier {};
-  frontier.push(&history.front());
+  // LIFO frontier
+  std::stack<Node> frontier {};
 
-  // will return out of the loop
   while ( history.size() < (history.max_size() / 2) ) {
 
     assert(! frontier.empty());
 
-    // generate new moves
-    const auto new_moves {frontier.top()->generate_possible_moves()};
+    // goal check before expansion
+    if ( *frontier.top().board_ptr == goal ) {
+      return backtrace(*frontier.top().board_ptr);
+    }
 
-    // remove expanded node
+    // get new moves and depth of node currently being expanded
+    const auto [new_moves, current_depth] {[&]() {
+      const auto& [board_ptr, depth] {frontier.top()};
+      return std::pair {board_ptr->generate_possible_moves(), depth};
+    }()};
     frontier.pop();
 
-    // save them to history
+    // do not search deeper than max_depth
+    if ( current_depth == max_depth ) {
+      continue;
+    }
+
     std::ranges::copy(new_moves, std::back_inserter(history));
-    history.sort(std::less {});
 
-    for ( const Board_4x4& board : new_moves ) {
-
-      // goal check each newly-generated node
-      if ( board == goal ) {
-        return backtrace(board);
-      }
-    }
-
-    // iterator to first new node in history
-    const auto first_new {
-      std::prev(history.end(),
-                static_cast<std::iterator_traits<
-                  std::decay_t<decltype(history.end())>>::difference_type>(
-                  new_moves.size()))};
-
-    // add new nodes to frontier, aware of object lifetimes
-    for ( const Board_4x4& board :
-          supl::range_wrapper {first_new, history.end()} ) {
-
-      // only push onto frontier if identical board state has not been generated
-      if ( ! std::ranges::binary_search(history, board, std::less {}) ) {
-        frontier.push(&board);
-      }
-    }
+    // finish DFS
   }
 
-  assert(false);
+  return {};
 }
 
 // h1 heuristic
@@ -153,6 +145,8 @@ auto misplaced_squares(const Board_4x4& arg) noexcept -> int
   // history to preserve lifetimes of all nodes for backtrace
   std::list<Board_4x4> history {start};
 
+  // frontier sorted such that nodes with the lowest h1 metric
+  // are at the front
   std::priority_queue frontier {
     [](const Board_4x4* lhs, const Board_4x4* rhs) -> bool {
       return misplaced_squares(*lhs) > misplaced_squares(*rhs);
