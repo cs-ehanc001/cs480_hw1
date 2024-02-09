@@ -8,7 +8,7 @@ Older versions of GCC *will* fail to build the project.
 ```sh
 mkdir build
 cd build
-cmake ../cpp -DCMAKE_BUILD_TYPE=Release
+cmake .. -DCMAKE_BUILD_TYPE=Release
 cmake --build . --parallel 4
 ```
 The name of the resulting executable is `square_puzzle_solver`.
